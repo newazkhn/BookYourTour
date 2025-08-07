@@ -18,6 +18,53 @@
             </div>
         </div>
     @endif
+
+     <!-- Quick Actions -->
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a href="{{ route('admin.destinations.create') }}" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="text-sm font-medium text-gray-900">Add Destination</h4>
+                    <p class="text-xs text-gray-500">Create new travel package</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="{{ route('admin.bookings.index') }}" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="text-sm font-medium text-gray-900">Manage Bookings</h4>
+                    <p class="text-xs text-gray-500">Review reservations</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="{{ route('home') }}" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="text-sm font-medium text-gray-900">View Website</h4>
+                    <p class="text-xs text-gray-500">See public site</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
     <!-- Revenue Overview Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
         <div class="flex items-center justify-between mb-6">
@@ -258,7 +305,7 @@
         </div>
 
         <!-- Quick Stats Summary -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        {{-- <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h3 class="text-lg font-semibold text-gray-900 mb-6">Quick Summary</h3>
             <div class="space-y-4">
                 <div class="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
@@ -306,10 +353,10 @@
                     <span class="text-lg font-bold text-yellow-600">{{ $dashboardData['bookings']['pending'] ?? 0 }}</span>
                 </div>
             </div>
-        </div>
-    </div>
+        </div> --}}
 
-    <!-- Recent Activities -->
+
+         <!-- Recent Activities -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <div class="flex items-center justify-between mb-6">
             <h3 class="text-lg font-semibold text-gray-900">Recent Activities</h3>
@@ -357,50 +404,9 @@
         </div>
     </div>
 
-    <!-- Quick Actions -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <a href="{{ route('admin.destinations.create') }}" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-            <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                    </svg>
-                </div>
-                <div>
-                    <h4 class="text-sm font-medium text-gray-900">Add Destination</h4>
-                    <p class="text-xs text-gray-500">Create new travel package</p>
-                </div>
-            </div>
-        </a>
-
-        <a href="{{ route('admin.bookings.index') }}" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-            <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                    </svg>
-                </div>
-                <div>
-                    <h4 class="text-sm font-medium text-gray-900">Manage Bookings</h4>
-                    <p class="text-xs text-gray-500">Review reservations</p>
-                </div>
-            </div>
-        </a>
-
-        <a href="{{ route('home') }}" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-            <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                    </svg>
-                </div>
-                <div>
-                    <h4 class="text-sm font-medium text-gray-900">View Website</h4>
-                    <p class="text-xs text-gray-500">See public site</p>
-                </div>
-            </div>
-        </a>
     </div>
+
+
+   
 </div>
 @endsection
