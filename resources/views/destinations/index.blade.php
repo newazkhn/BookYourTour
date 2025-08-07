@@ -8,7 +8,7 @@
     <div class="bg-gradient-to-r from-blue-600 via-blue-700 to-purple-700 text-white">
         <div class="container mx-auto px-4 py-28">
             <div class="text-center max-w-4xl mx-auto">
-                @if(!empty($searchQuery) || !empty($selectedCategory))
+                @if(!empty($searchQuery))
                     <h1 class="text-4xl md:text-5xl font-bold mb-4">
                         Search Results
                     </h1>

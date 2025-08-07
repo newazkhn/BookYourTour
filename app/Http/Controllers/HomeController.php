@@ -20,12 +20,7 @@ class HomeController extends Controller
             ->limit(8)
             ->get();
 
-        // Get unique categories for filtering
-        $categories = Destination::whereNotNull('category')
-            ->distinct()
-            ->pluck('category')
-            ->filter()
-            ->values();
+
 
         // Get recent destinations as fallback content
         $recentDestinations = Destination::latest()
@@ -41,46 +36,10 @@ class HomeController extends Controller
         return view('home.index', compact(
             'featuredDestinations',
             'popularDestinations', 
-            'categories',
             'recentDestinations',
             'allDestinations'
         ));
     }
 
-    /**
-     * Filter destinations by category via AJAX
-     */
-    public function filterByCategory(Request $request)
-    {
-        $category = $request->get('category');
-        
-        $query = Destination::query();
-        
-        if ($category && $category !== 'all') {
-            $query->where('category', $category);
-        }
-        
-        $destinations = $query->orderBy('featured', 'desc')
-            ->orderBy('rating', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->get();
-            
-        return response()->json([
-            'destinations' => $destinations->map(function($destination) {
-                return [
-                    'id' => $destination->id,
-                    'name' => $destination->name,
-                    'location' => $destination->location,
-                    'description' => $destination->description,
-                    'image' => $destination->image ? asset('storage/' . $destination->image) : null,
-                    'category' => $destination->category,
-                    'rating' => $destination->rating,
-                    'price_from' => $destination->price_from,
-                    'duration' => $destination->duration,
-                    'url' => route('destinations.show', $destination)
-                ];
-            }),
-            'count' => $destinations->count()
-        ]);
-    }
+
 }

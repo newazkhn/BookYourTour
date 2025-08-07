@@ -338,7 +338,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string|null $duration
-     * @property array|null $amenities
+     * @property string|null $amenities
      * @property array|null $gallery
      * @property boolean $featured
      * @property string|null $category

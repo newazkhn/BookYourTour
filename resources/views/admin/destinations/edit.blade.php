@@ -30,6 +30,24 @@
             </div>
 
             <div class="px-6 pb-6 space-y-6">
+                <!-- Upload Error Display -->
+                @error('upload')
+                    <div class="bg-red-50 border border-red-200 rounded-md p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-red-800">Upload Error</h3>
+                                <div class="mt-2 text-sm text-red-700">
+                                    <p>{{ $message }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @enderror
                 <!-- Basic Information -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Name -->
@@ -221,50 +239,20 @@
                     </div>
                 </div>
 
-                <!-- Category and Featured -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Category -->
-                    <div>
-                        <label for="category" class="block text-sm font-medium text-slate-700 mb-2">Category *</label>
-                        <select name="category" id="category" required
-                                class="block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 @error('category') border-red-300 @enderror">
-                            <option value="">Select category</option>
-                            <option value="beach" {{ old('category', $destination->category) == 'beach' ? 'selected' : '' }}>Beach</option>
-                            <option value="mountain" {{ old('category', $destination->category) == 'mountain' ? 'selected' : '' }}>Mountain</option>
-                            <option value="city" {{ old('category', $destination->category) == 'city' ? 'selected' : '' }}>City</option>
-                            <option value="adventure" {{ old('category', $destination->category) == 'adventure' ? 'selected' : '' }}>Adventure</option>
-                            <option value="cultural" {{ old('category', $destination->category) == 'cultural' ? 'selected' : '' }}>Cultural</option>
-                            <option value="wildlife" {{ old('category', $destination->category) == 'wildlife' ? 'selected' : '' }}>Wildlife</option>
-                        </select>
-                        @error('category')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <!-- Featured -->
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-2">Featured Destination</label>
-                        <div class="flex items-center">
-                            <input type="checkbox" name="featured" id="featured" value="1" {{ old('featured', $destination->featured) ? 'checked' : '' }}
-                                   class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300 rounded">
-                            <label for="featured" class="ml-2 block text-sm text-slate-700">
-                                Mark as featured destination
-                            </label>
-                        </div>
-                        <p class="mt-1 text-xs text-slate-500">Featured destinations appear prominently on the homepage</p>
-                    </div>
-                </div>
-
-                <!-- Amenities -->
+                <!-- Featured -->
                 <div>
-                    <label for="amenities" class="block text-sm font-medium text-slate-700 mb-2">Amenities</label>
-                    <textarea name="amenities" id="amenities" rows="3"
-                              class="block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 @error('amenities') border-red-300 @enderror"
-                              placeholder="List amenities separated by commas (e.g., WiFi, Pool, Spa, Restaurant)">{{ old('amenities', is_array($destination->amenities) ? implode(', ', $destination->amenities) : $destination->amenities) }}</textarea>
-                    @error('amenities')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                    <label class="block text-sm font-medium text-slate-700 mb-2">Featured Destination</label>
+                    <div class="flex items-center">
+                        <input type="checkbox" name="featured" id="featured" value="1" {{ old('featured', $destination->featured) ? 'checked' : '' }}
+                               class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300 rounded">
+                        <label for="featured" class="ml-2 block text-sm text-slate-700">
+                            Mark as featured destination
+                        </label>
+                    </div>
+                    <p class="mt-1 text-xs text-slate-500">Featured destinations appear prominently on the homepage</p>
                 </div>
+
+
 
                 <!-- Form Actions -->
                 <div class="flex items-center justify-end space-x-4 pt-6 border-t border-slate-200">
@@ -291,6 +279,15 @@ document.getElementById('image').addEventListener('change', function(e) {
     const previewImg = document.getElementById('main-preview-img');
     
     if (file) {
+        // Validate file size (10MB)
+        if (file.size > 10 * 1024 * 1024) {
+            const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+            alert(`File size (${fileSizeMB}MB) exceeds the 10MB limit. Please choose a smaller image or compress it.`);
+            e.target.value = ''; // Clear the input
+            preview.classList.add('hidden');
+            return;
+        }
+        
         const reader = new FileReader();
         reader.onload = function(e) {
             previewImg.src = e.target.result;
@@ -447,7 +444,8 @@ document.addEventListener('change', function(e) {
             
             // Validate file size (10MB)
             if (file.size > 10 * 1024 * 1024) {
-                alert('File size must be less than 10MB');
+                const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+                alert(`File size (${fileSizeMB}MB) exceeds the 10MB limit. Please choose a smaller image or compress it.`);
                 return;
             }
             

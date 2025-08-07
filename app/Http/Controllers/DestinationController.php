@@ -23,30 +23,22 @@ class DestinationController extends Controller
             });
         }
         
-        // Handle category filter
-        if ($request->filled('category')) {
-            $query->where('category', $request->get('category'));
-        }
+
         
         $destinations = $query->latest()->paginate(12);
         
         return view('destinations.index', [
             'destinations' => $destinations,
             'searchQuery' => $request->get('search', ''),
-            'selectedCategory' => $request->get('category', ''),
             'totalResults' => $destinations->total()
         ]);
     }
 
     public function show(Destination $destination)
     {
-        // Ensure gallery and amenities are properly decoded if they're JSON strings
+        // Ensure gallery is properly decoded if it's a JSON string
         if (is_string($destination->gallery)) {
             $destination->gallery = json_decode($destination->gallery, true) ?? [];
-        }
-        
-        if (is_string($destination->amenities)) {
-            $destination->amenities = json_decode($destination->amenities, true) ?? [];
         }
         
         return view('destinations.show', compact('destination'));
@@ -71,10 +63,7 @@ class DestinationController extends Controller
             });
         }
         
-        // Apply category filter
-        if ($request->filled('category')) {
-            $query->where('category', $request->get('category'));
-        }
+
         
         // Apply featured filter
         if ($request->filled('featured')) {
@@ -171,12 +160,10 @@ class DestinationController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:10240',
             'gallery' => 'required|array|min:3|max:10',
             'gallery.*' => 'required|image|mimes:jpeg,png,jpg,webp|max:10240',
-            'category' => 'required|string|in:beach,mountain,city,adventure,cultural,wildlife',
             'price_from' => 'required|numeric|min:0',
             'duration' => 'required|string|max:100',
             'rating' => 'required|numeric|min:1|max:5',
             'featured' => 'nullable|boolean',
-            'amenities' => 'nullable|string',
         ]);
 
         // Store main image
@@ -190,24 +177,15 @@ class DestinationController extends Controller
             }
         }
 
-        // Process amenities
-        $amenities = null;
-        if ($request->filled('amenities')) {
-            $amenities = array_map('trim', explode(',', $request->amenities));
-            $amenities = json_encode(array_filter($amenities));
-        }
-
         Destination::create([
             'name' => $request->name,
             'location' => $request->location,
             'description' => $request->description,
             'image' => $imagePath,
             'gallery' => json_encode($galleryPaths),
-            'category' => $request->category,
             'price_from' => $request->price_from,
             'duration' => $request->duration,
             'rating' => $request->rating,
-            'amenities' => $amenities,
             'featured' => $request->boolean('featured'),
         ]);
 
@@ -229,15 +207,13 @@ class DestinationController extends Controller
             'gallery' => 'nullable|array|max:10',
             'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
             'existing_gallery' => 'nullable|array',
-            'category' => 'required|string|in:beach,mountain,city,adventure,cultural,wildlife',
             'price_from' => 'required|numeric|min:0',
             'duration' => 'required|string|max:100',
             'rating' => 'required|numeric|min:1|max:5',
             'featured' => 'nullable|boolean',
-            'amenities' => 'nullable|string',
         ]);
 
-        $updateData = $request->only('name', 'location', 'description', 'category', 'price_from', 'duration', 'rating');
+        $updateData = $request->only('name', 'location', 'description', 'price_from', 'duration', 'rating');
         $updateData['featured'] = $request->boolean('featured');
 
         // Handle main image update
@@ -278,14 +254,6 @@ class DestinationController extends Controller
         }
         
         $updateData['gallery'] = json_encode($galleryPaths);
-
-        // Process amenities
-        if ($request->filled('amenities')) {
-            $amenities = array_map('trim', explode(',', $request->amenities));
-            $updateData['amenities'] = json_encode(array_filter($amenities));
-        } else {
-            $updateData['amenities'] = null;
-        }
 
         $destination->update($updateData);
         

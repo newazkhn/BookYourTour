@@ -16,16 +16,13 @@ class Destination extends Model
         'image',
         'price_from',
         'rating',
-        'category',
         'featured',
         'gallery',
-        'amenities',
         'duration'
     ];
 
     protected $casts = [
         'gallery' => 'array',
-        'amenities' => 'array',
         'featured' => 'boolean',
         'price_from' => 'decimal:2',
         'rating' => 'decimal:2'

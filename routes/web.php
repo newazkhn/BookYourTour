@@ -13,7 +13,7 @@ use App\Http\Controllers\AdminDashboardController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/api/destinations/filter', [HomeController::class, 'filterByCategory'])->name('destinations.filter');
+
 Route::get('/api/search/suggestions', [SearchController::class, 'suggestions'])->name('search.suggestions');
 Route::get('/api/search/popular', [SearchController::class, 'popular'])->name('search.popular');
 Route::get('/search', [SearchController::class, 'search'])->name('search');

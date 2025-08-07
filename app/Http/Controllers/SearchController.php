@@ -46,7 +46,6 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         $query = $request->get('search', '');
-        $category = $request->get('category', '');
         
         $destinations = Destination::query();
 
@@ -59,10 +58,7 @@ class SearchController extends Controller
             });
         }
 
-        // Apply category filter
-        if (!empty($category)) {
-            $destinations->where('category', $category);
-        }
+
 
         $results = $destinations->latest()->paginate(12);
         
@@ -72,7 +68,6 @@ class SearchController extends Controller
         return view('destinations.index', [
             'destinations' => $results,
             'searchQuery' => $query,
-            'selectedCategory' => $category,
             'totalResults' => $results->total()
         ]);
     }

@@ -58,15 +58,7 @@
             @endif
         </div>
 
-        {{-- <!-- Category Filter Section -->
-        @if($categories->count() > 0)
-            <div id="categories" class="scroll-mt-20">
-                @include('components.category-filter', [
-                    'categories' => $categories,
-                    'destinations' => $allDestinations ?? $recentDestinations
-                ])
-            </div>
-        @endif --}}
+
 
         <!-- Popular Destinations Section -->
         @if($popularDestinations->count() > 0)
@@ -110,12 +102,7 @@
                                         </div>
                                     @endif
 
-                                    <!-- Category Badge -->
-                                    @if($destination->category)
-                                        <div class="absolute top-3 left-3 bg-blue-600/90 backdrop-blur-sm text-white px-2 py-1 rounded-full text-xs font-medium capitalize">
-                                            {{ $destination->category }}
-                                        </div>
-                                    @endif
+
                                 </div>
 
                                 <!-- Card Content -->

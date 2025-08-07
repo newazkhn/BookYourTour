@@ -70,7 +70,7 @@
                 </div>
                 <div class="ml-3">
                     <p class="text-xs font-medium text-gray-600">Categories</p>
-                    <p class="text-xl font-bold text-gray-900">{{ $destinations->pluck('category')->unique()->count() }}</p>
+                   
                     <p class="text-xs text-green-600">Different types</p>
                 </div>
             </div>
@@ -113,9 +113,7 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Destination
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Category
-                            </th>
+                           
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Price
                             </th>
@@ -162,15 +160,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    @if($destination->category)
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                            {{ ucfirst($destination->category) }}
-                                        </span>
-                                    @else
-                                        <span class="text-gray-400 text-sm">-</span>
-                                    @endif
-                                </td>
+                               
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                     @if($destination->price_from)
                                         <div class="font-medium">${{ number_format($destination->price_from) }}</div>
